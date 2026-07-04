@@ -21,6 +21,7 @@ public class NotesController(IObsidianIndexService indexService) : ControllerBas
     /// that, reindex before calling this again to get the up-to-date content.
     /// </remarks>
     /// <param name="path">Relative path of the note inside the vault, e.g. "projects/example.md".</param>
+    /// <param name="ct">Cancellation token.</param>
     [HttpGet]
     [ProducesResponseType(typeof(NoteContentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -52,6 +53,7 @@ public class NotesController(IObsidianIndexService indexService) : ControllerBas
     /// </remarks>
     /// <param name="q">Free-text search terms.</param>
     /// <param name="max">Maximum number of results to return. Default 20, capped at 100.</param>
+    /// <param name="ct">Cancellation token.</param>
     [HttpGet("search")]
     [ProducesResponseType(typeof(SearchResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
