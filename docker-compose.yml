@@ -6,6 +6,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       OBSIDIAN__REINDEXINTERVALMINUTES: "5"
+    ports:
+      - "${OBSIDIAN_HOST_PORT}:8080"
     volumes:
       - ${OBSIDIAN_VAULT_HOST_PATH}:/vault:ro
       - ${OBSIDIAN_DATA_HOST_PATH}:/data

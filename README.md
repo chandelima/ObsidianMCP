@@ -138,17 +138,20 @@ time are the **host** paths for the two volumes:
 |---|---|
 | `OBSIDIAN_VAULT_HOST_PATH` | Host path to your vault. Mounted read-only at `/vault`. |
 | `OBSIDIAN_DATA_HOST_PATH` | Host path where the Lucene index and `manifest.json` are persisted. Mounted at `/data`. |
+| `OBSIDIAN_HOST_PORT` | Host port to publish, mapped to the container's internal port `8080`. |
 
-Neither `volumes:` nor `ports:` are hardcoded in `docker-compose.yml` on purpose — this was
-built to be deployed as a Portainer stack straight from the GitHub repo, and Portainer's stack
-UI for that flow only lets you set environment variables, not volumes or port mappings.
+Neither `volumes:` nor `ports:` are hardcoded with fixed values in `docker-compose.yml` on
+purpose — this was built to be deployed as a Portainer stack straight from the GitHub repo, and
+Portainer's stack UI for that flow only lets you set environment variables, not volumes or port
+mappings directly.
 
 ```bash
 OBSIDIAN_VAULT_HOST_PATH=/home/user/ObsidianVault \
 OBSIDIAN_DATA_HOST_PATH=/home/user/.local/share/obsidian-mcp \
+OBSIDIAN_HOST_PORT=5115 \
 docker compose up --build
 ```
 
-In Portainer, set `OBSIDIAN_VAULT_HOST_PATH` and `OBSIDIAN_DATA_HOST_PATH` in the stack's
-"Environment variables" section when deploying from the repository — Portainer feeds them to
-`docker compose` the same way a `.env` file would.
+In Portainer, set `OBSIDIAN_VAULT_HOST_PATH`, `OBSIDIAN_DATA_HOST_PATH`, and
+`OBSIDIAN_HOST_PORT` in the stack's "Environment variables" section when deploying from the
+repository — Portainer feeds them to `docker compose` the same way a `.env` file would.
