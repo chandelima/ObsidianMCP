@@ -1,0 +1,11 @@
+services:
+  obsidian-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      Obsidian__VaultPath: /path/to/vault
+      Obsidian__DataPath: /path/to/data
+      Obsidian__ReindexIntervalMinutes: "5"
+    restart: unless-stopped
