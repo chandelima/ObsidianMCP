@@ -19,11 +19,8 @@ internal static class SetupApi
 
     internal static void ApplyObsidianMcpSettings(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         if (app.Environment.IsProduction())
         {
