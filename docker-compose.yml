@@ -4,8 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      Obsidian__VaultPath: /path/to/vault
-      Obsidian__DataPath: /path/to/data
-      Obsidian__ReindexIntervalMinutes: "5"
+      ASPNETCORE_ENVIRONMENT: Docker
+      OBSIDIAN__REINDEXINTERVALMINUTES: "5"
+    volumes:
+      - ${OBSIDIAN_VAULT_HOST_PATH}:/vault:ro
+      - ${OBSIDIAN_DATA_HOST_PATH}:/data
     restart: unless-stopped

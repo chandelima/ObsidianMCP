@@ -24,7 +24,8 @@ internal static class SetupApi
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        else
+
+        if (app.Environment.IsProduction())
         {
             app.UseHttpsRedirection();
         }

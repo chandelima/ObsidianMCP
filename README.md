@@ -114,8 +114,8 @@ export ASPNETCORE_ENVIRONMENT=Production
 export ASPNETCORE_URLS="http://0.0.0.0:5115"
 ```
 
-(In `Production`, HTTPS redirection is enabled; in `Development`, it's disabled to simplify
-local testing with tools like the MCP Inspector.)
+(HTTPS redirection is only forced in the `Production` environment. `Development` and `Docker`
+both leave it off, to simplify local testing with tools like the MCP Inspector.)
 
 ## Running locally
 
@@ -126,3 +126,29 @@ dotnet run --project ObsidianMCP.API
 
 The API comes up on `http://localhost:5115` (the `http` profile in `launchSettings.json`) by
 default in development.
+
+## Running with Docker
+
+The `Dockerfile` builds and publishes `ObsidianMCP.API`; `docker-compose.yml` runs it under a
+dedicated `Docker` environment. `appsettings.Docker.json` already fixes the container-internal
+paths (`VaultPath=/vault`, `DataPath=/data`), so the only things left to configure at deploy
+time are the **host** paths for the two volumes:
+
+| Environment variable | What it is |
+|---|---|
+| `OBSIDIAN_VAULT_HOST_PATH` | Host path to your vault. Mounted read-only at `/vault`. |
+| `OBSIDIAN_DATA_HOST_PATH` | Host path where the Lucene index and `manifest.json` are persisted. Mounted at `/data`. |
+
+Neither `volumes:` nor `ports:` are hardcoded in `docker-compose.yml` on purpose — this was
+built to be deployed as a Portainer stack straight from the GitHub repo, and Portainer's stack
+UI for that flow only lets you set environment variables, not volumes or port mappings.
+
+```bash
+OBSIDIAN_VAULT_HOST_PATH=/home/user/ObsidianVault \
+OBSIDIAN_DATA_HOST_PATH=/home/user/.local/share/obsidian-mcp \
+docker compose up --build
+```
+
+In Portainer, set `OBSIDIAN_VAULT_HOST_PATH` and `OBSIDIAN_DATA_HOST_PATH` in the stack's
+"Environment variables" section when deploying from the repository — Portainer feeds them to
+`docker compose` the same way a `.env` file would.
