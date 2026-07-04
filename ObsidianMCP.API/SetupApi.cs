@@ -1,0 +1,36 @@
+namespace ObsidianMCP.API;
+
+internal static class SetupApi
+{
+    internal static void AddObsidianMcpApi(this IServiceCollection services)
+    {
+        services.AddControllers();
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy => policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithExposedHeaders("Mcp-Session-Id"));
+        });
+    }
+
+    internal static void ApplyObsidianMcpSettings(this WebApplication app)
+    {
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        else
+        {
+            app.UseHttpsRedirection();
+        }
+
+        app.UseCors();
+        app.UseAuthorization();
+        app.MapControllers();
+    }
+}

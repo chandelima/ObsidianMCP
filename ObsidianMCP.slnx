@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ObsidianMCP.API/ObsidianMCP.API.csproj" Id="50f5f480-b5d5-4308-a1b5-a050fdc78c19" />
+  <Project Path="ObsidianMCP.Application/ObsidianMCP.Application.csproj" />
+  <Project Path="ObsidianMCP.Domain/ObsidianMCP.Domain.csproj" />
+  <Project Path="ObsidianMCP.Infrastructure/ObsidianMCP.Infrastructure.csproj" />
+</Solution>
